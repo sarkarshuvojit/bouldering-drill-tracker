@@ -10,6 +10,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'icon.svg'],
+      base: '/bouldering-webapp/',
       manifest: {
         name: 'Bouldering Drill Tracker',
         short_name: 'Drill Tracker',
@@ -17,8 +18,8 @@ export default defineConfig({
         theme_color: '#7c3aed',
         background_color: '#1e1b4b',
         display: 'standalone',
-        start_url: '/',
-        scope: '/',
+        start_url: '/bouldering-webapp/',
+        scope: '/bouldering-webapp/',
         orientation: 'portrait-primary',
         categories: ['sports', 'health', 'productivity'],
         icons: [
