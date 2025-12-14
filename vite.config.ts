@@ -4,13 +4,13 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/bouldering-webapp/',
+  base: '/bouldering-drill-tracker/',
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'icon.svg'],
-      base: '/bouldering-webapp/',
+      base: '/bouldering-drill-tracker/',
       manifest: {
         name: 'Bouldering Drill Tracker',
         short_name: 'Drill Tracker',
@@ -18,8 +18,8 @@ export default defineConfig({
         theme_color: '#7c3aed',
         background_color: '#1e1b4b',
         display: 'standalone',
-        start_url: '/bouldering-webapp/',
-        scope: '/bouldering-webapp/',
+        start_url: '/bouldering-drill-tracker/',
+        scope: '/bouldering-drill-tracker/',
         orientation: 'portrait-primary',
         categories: ['sports', 'health', 'productivity'],
         icons: [
