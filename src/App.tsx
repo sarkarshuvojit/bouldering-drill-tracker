@@ -10,6 +10,9 @@ import button5 from './assets/buttons/button_sheet_2-1.png'
 import button6 from './assets/buttons/button_sheet_2-2.png'
 import button7 from './assets/buttons/button_sheet_2-3.png'
 
+// Import notification sound
+import notificationSound from './assets/notification_sound.mp3'
+
 // Random climbing hold selector
 const BUTTON_IMAGES = [button0, button1, button2, button3, button4, button5, button6, button7]
 const getRandomHold = () => BUTTON_IMAGES[Math.floor(Math.random() * BUTTON_IMAGES.length)]
@@ -61,6 +64,7 @@ function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
   const timerRef = useRef<number | undefined>(undefined)
   const restTimerRef = useRef<number | undefined>(undefined)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     localStorage.setItem('bouldering-config', JSON.stringify(config))
@@ -71,6 +75,10 @@ function App() {
   }, [sessions])
 
   useEffect(() => {
+    // Initialize audio element
+    audioRef.current = new Audio(notificationSound)
+    audioRef.current.preload = 'auto'
+
     const handleOnline = () => setIsOnline(true)
     const handleOffline = () => setIsOnline(false)
     window.addEventListener('online', handleOnline)
@@ -99,6 +107,11 @@ function App() {
       restTimerRef.current = window.setInterval(() => {
         setRestTimeLeft(prev => {
           if (prev <= 100) {
+            // Play notification sound when rest is over
+            if (audioRef.current) {
+              audioRef.current.currentTime = 0
+              audioRef.current.play().catch(err => console.log('Audio play failed:', err))
+            }
             setState('active')
             return 0
           }
