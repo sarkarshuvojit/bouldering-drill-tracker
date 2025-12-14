@@ -164,22 +164,25 @@ function App() {
   const progress = (totalTouches / config.targetTouches) * 100
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="min-h-screen p-4 md:p-8 relative z-10">
       <div className="max-w-4xl mx-auto">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-            Bouldering Drill Tracker
-          </h1>
-          <div className="flex items-center gap-4">
-            <div className={`px-3 py-1 rounded-full text-sm font-semibold ${isOnline ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-              {isOnline ? '● Online' : '● Offline'}
+          <div>
+            <h1 className="text-3xl md:text-4xl font-black text-zinc-100 tracking-tight">
+              DRILL TRACKER
+            </h1>
+            <p className="text-sm text-zinc-500 mt-1 font-mono">Indoor Bouldering</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide ${isOnline ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-zinc-700 text-zinc-400 border border-zinc-600'}`}>
+              {isOnline ? '● Live' : '● Offline'}
             </div>
             <button
               onClick={() => setShowConfig(!showConfig)}
-              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+              className="p-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors border border-zinc-700"
               aria-label="Settings"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
@@ -188,26 +191,26 @@ function App() {
         </header>
 
         {showConfig && (
-          <div className="mb-8 p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 glow">
-            <h2 className="text-2xl font-bold mb-4">Configuration</h2>
+          <div className="mb-8 p-6 rounded-xl wall-texture border border-zinc-700 chalk-dust">
+            <h2 className="text-xl font-black text-zinc-100 mb-4 uppercase tracking-wide">Settings</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Rest Between Sets (seconds)</label>
+                <label className="block text-xs font-bold text-zinc-400 mb-2 uppercase tracking-wide">Rest Between Sets (seconds)</label>
                 <input
                   type="number"
                   value={config.restBetweenSets}
                   onChange={(e) => setConfig({ ...config, restBetweenSets: parseInt(e.target.value) || 0 })}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-zinc-500 focus:outline-none text-zinc-100 font-mono"
                   min="0"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Target Touches</label>
+                <label className="block text-xs font-bold text-zinc-400 mb-2 uppercase tracking-wide">Target Touches</label>
                 <input
                   type="number"
                   value={config.targetTouches}
                   onChange={(e) => setConfig({ ...config, targetTouches: parseInt(e.target.value) || 0 })}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                  className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-zinc-500 focus:outline-none text-zinc-100 font-mono"
                   min="1"
                 />
               </div>
@@ -216,14 +219,17 @@ function App() {
         )}
 
         {state === 'idle' && (
-          <div className="text-center py-12">
-            <div className="mb-8">
-              <p className="text-xl text-gray-300 mb-2">Ready to start your training?</p>
-              <p className="text-gray-400">Target: {config.targetTouches} touches | Rest: {config.restBetweenSets}s</p>
+          <div className="text-center py-16">
+            <div className="mb-10">
+              <p className="text-2xl text-zinc-300 mb-3 font-bold">Ready to climb?</p>
+              <p className="text-zinc-500 font-mono text-sm">
+                <span className="text-emerald-400">{config.targetTouches}</span> touches •
+                <span className="text-blue-400"> {config.restBetweenSets}s</span> rest
+              </p>
             </div>
             <button
               onClick={startSession}
-              className="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 font-bold text-lg transition-all transform hover:scale-105 glow"
+              className="climbing-hold px-12 py-6 text-emerald-500 hover:text-emerald-400 font-black text-xl uppercase tracking-wider"
             >
               Start Session
             </button>
@@ -233,79 +239,83 @@ function App() {
         {(state === 'active' || state === 'resting') && (
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10">
-                <div className="text-sm text-gray-400 mb-1">Session Time</div>
-                <div className="text-3xl font-bold">{formatTime(elapsedTime)}</div>
+              <div className="p-5 rounded-xl wall-texture border border-zinc-700">
+                <div className="text-xs text-zinc-500 mb-1 font-mono uppercase tracking-wide">Time</div>
+                <div className="text-3xl font-black text-zinc-100 font-mono">{formatTime(elapsedTime)}</div>
               </div>
-              <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10">
-                <div className="text-sm text-gray-400 mb-1">Total Touches</div>
-                <div className="text-3xl font-bold">{totalTouches} / {config.targetTouches}</div>
+              <div className="p-5 rounded-xl wall-texture border border-zinc-700">
+                <div className="text-xs text-zinc-500 mb-1 font-mono uppercase tracking-wide">Touches</div>
+                <div className="text-3xl font-black text-zinc-100 font-mono">
+                  <span className="text-emerald-400">{totalTouches}</span>
+                  <span className="text-zinc-600"> / </span>
+                  <span className="text-zinc-500">{config.targetTouches}</span>
+                </div>
               </div>
-              <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10">
-                <div className="text-sm text-gray-400 mb-1">Attempts</div>
-                <div className="text-3xl font-bold">{touches.length}</div>
+              <div className="p-5 rounded-xl wall-texture border border-zinc-700">
+                <div className="text-xs text-zinc-500 mb-1 font-mono uppercase tracking-wide">Attempts</div>
+                <div className="text-3xl font-black text-blue-400 font-mono">{touches.length}</div>
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10">
-              <div className="h-4 bg-white/10 rounded-full overflow-hidden">
+            <div className="p-5 rounded-xl wall-texture border border-zinc-700">
+              <div className="h-3 bg-zinc-800 rounded-full overflow-hidden border border-zinc-700">
                 <div
-                  className="h-full bg-gradient-to-r from-purple-600 to-pink-600 transition-all duration-300"
+                  className="h-full bg-emerald-500 transition-all duration-300"
                   style={{ width: `${Math.min(progress, 100)}%` }}
                 />
               </div>
-              <div className="text-center mt-2 text-sm text-gray-400">
+              <div className="text-center mt-3 text-xs text-zinc-500 font-mono uppercase tracking-wide">
                 {progress.toFixed(1)}% Complete
               </div>
             </div>
 
             {state === 'resting' ? (
-              <div className="p-8 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-lg border border-orange-500/30 text-center glow-red">
-                <div className="text-sm text-orange-300 mb-2">Rest Period</div>
-                <div className="text-5xl font-bold mb-4">{formatTime(restTimeLeft)}</div>
+              <div className="p-10 rounded-xl wall-texture border border-orange-600/50 text-center chalk-dust">
+                <div className="text-xs text-orange-400 mb-2 font-mono uppercase tracking-wide">Rest</div>
+                <div className="text-6xl font-black text-orange-400 mb-6 font-mono">{formatTime(restTimeLeft)}</div>
                 <button
                   onClick={skipRest}
-                  className="px-6 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                  className="climbing-hold px-8 py-3 text-orange-500 hover:text-orange-400 font-bold uppercase tracking-wide text-sm"
                 >
-                  Skip Rest
+                  Skip
                 </button>
               </div>
             ) : (
-              <form onSubmit={addTouch} className="p-8 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-lg border border-purple-500/30 glow">
-                <div className="text-center mb-4">
-                  <label className="block text-lg font-semibold mb-2">Enter Touches</label>
-                  <p className="text-sm text-gray-400">Enter 0 if you couldn't touch any holds</p>
+              <form onSubmit={addTouch} className="p-8 rounded-xl wall-texture border border-zinc-700 chalk-dust">
+                <div className="text-center mb-6">
+                  <label className="block text-sm font-black text-zinc-300 mb-1 uppercase tracking-wider">Log Touches</label>
+                  <p className="text-xs text-zinc-500 font-mono">Enter 0 for a fall</p>
                 </div>
                 <div className="flex gap-4">
                   <input
                     type="number"
                     value={currentTouchInput}
                     onChange={(e) => setCurrentTouchInput(e.target.value)}
-                    className="flex-1 px-6 py-4 rounded-xl bg-white/10 border border-white/20 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-2xl text-center"
+                    className="flex-1 px-6 py-5 rounded-xl bg-zinc-800 border-2 border-zinc-700 focus:border-emerald-500 focus:outline-none text-3xl text-center text-zinc-100 font-mono font-black"
                     placeholder="0"
                     min="0"
                     autoFocus
                   />
                   <button
                     type="submit"
-                    className="px-8 py-4 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 font-bold transition-all transform hover:scale-105 glow-green"
+                    className="climbing-hold px-10 py-5 text-emerald-500 hover:text-emerald-400 font-black text-lg uppercase tracking-wide"
                   >
-                    Submit
+                    Log
                   </button>
                 </div>
               </form>
             )}
 
             {touches.length > 0 && (
-              <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10">
-                <h3 className="text-lg font-semibold mb-3">Recent Touches</h3>
+              <div className="p-5 rounded-xl wall-texture border border-zinc-700">
+                <h3 className="text-xs font-black text-zinc-400 mb-3 uppercase tracking-wider">Recent</h3>
                 <div className="space-y-2 max-h-40 overflow-y-auto">
                   {[...touches].reverse().slice(0, 5).map((touch, idx) => (
-                    <div key={idx} className="flex justify-between items-center text-sm">
-                      <span className={touch.value === 0 ? 'text-red-400' : 'text-green-400'}>
-                        {touch.value === 0 ? 'Fall' : `${touch.value} touches`}
+                    <div key={idx} className="flex justify-between items-center text-sm font-mono">
+                      <span className={touch.value === 0 ? 'text-red-400 font-bold' : 'text-emerald-400 font-bold'}>
+                        {touch.value === 0 ? '✗ Fall' : `✓ ${touch.value}`}
                       </span>
-                      <span className="text-gray-400">
+                      <span className="text-zinc-600 text-xs">
                         {new Date(touch.timestamp).toLocaleTimeString()}
                       </span>
                     </div>
@@ -318,26 +328,26 @@ function App() {
 
         {state === 'complete' && (
           <div className="text-center py-12">
-            <div className="mb-8 p-8 rounded-2xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-lg border border-green-500/30 glow-green">
-              <h2 className="text-3xl font-bold mb-4">Session Complete!</h2>
-              <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="mb-10 p-10 rounded-xl wall-texture border border-emerald-600/50 chalk-dust">
+              <h2 className="text-2xl font-black text-emerald-400 mb-6 uppercase tracking-wider">Send Complete!</h2>
+              <div className="grid grid-cols-3 gap-6 mb-6">
                 <div>
-                  <div className="text-sm text-gray-400">Time</div>
-                  <div className="text-2xl font-bold">{formatTime(elapsedTime)}</div>
+                  <div className="text-xs text-zinc-500 font-mono uppercase mb-1">Time</div>
+                  <div className="text-3xl font-black text-zinc-100 font-mono">{formatTime(elapsedTime)}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-400">Touches</div>
-                  <div className="text-2xl font-bold">{totalTouches}</div>
+                  <div className="text-xs text-zinc-500 font-mono uppercase mb-1">Touches</div>
+                  <div className="text-3xl font-black text-emerald-400 font-mono">{totalTouches}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-400">Attempts</div>
-                  <div className="text-2xl font-bold">{touches.length}</div>
+                  <div className="text-xs text-zinc-500 font-mono uppercase mb-1">Attempts</div>
+                  <div className="text-3xl font-black text-blue-400 font-mono">{touches.length}</div>
                 </div>
               </div>
             </div>
             <button
               onClick={resetSession}
-              className="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 font-bold text-lg transition-all transform hover:scale-105"
+              className="climbing-hold px-12 py-6 text-blue-500 hover:text-blue-400 font-black text-xl uppercase tracking-wider"
             >
               New Session
             </button>
@@ -346,33 +356,33 @@ function App() {
 
         {sessions.length > 0 && state === 'idle' && (
           <div className="mt-12">
-            <h2 className="text-2xl font-bold mb-4">Session History</h2>
-            <div className="space-y-4">
+            <h2 className="text-xl font-black text-zinc-300 mb-4 uppercase tracking-wider">Session Log</h2>
+            <div className="space-y-3">
               {sessions.slice(0, 10).map((session) => (
-                <div key={session.id} className="p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:border-purple-500/50 transition-colors">
-                  <div className="flex justify-between items-start mb-3">
+                <div key={session.id} className="p-5 rounded-xl wall-texture border border-zinc-700 hover:border-zinc-600 transition-colors">
+                  <div className="flex justify-between items-start mb-4">
                     <div>
-                      <div className="text-sm text-gray-400">
-                        {new Date(session.startTime).toLocaleDateString()} at {new Date(session.startTime).toLocaleTimeString()}
+                      <div className="text-xs text-zinc-500 font-mono">
+                        {new Date(session.startTime).toLocaleDateString()} • {new Date(session.startTime).toLocaleTimeString()}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm text-gray-400">Duration</div>
-                      <div className="font-bold">{formatTime(session.totalTime)}</div>
+                      <div className="text-xs text-zinc-600 uppercase tracking-wide font-mono">Duration</div>
+                      <div className="font-black text-zinc-400 font-mono">{formatTime(session.totalTime)}</div>
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4 text-center">
                     <div>
-                      <div className="text-sm text-gray-400">Touches</div>
-                      <div className="text-xl font-bold text-green-400">{session.totalTouches}</div>
+                      <div className="text-xs text-zinc-600 uppercase tracking-wide font-mono">Touches</div>
+                      <div className="text-2xl font-black text-emerald-400 font-mono">{session.totalTouches}</div>
                     </div>
                     <div>
-                      <div className="text-sm text-gray-400">Attempts</div>
-                      <div className="text-xl font-bold">{session.falls}</div>
+                      <div className="text-xs text-zinc-600 uppercase tracking-wide font-mono">Attempts</div>
+                      <div className="text-2xl font-black text-blue-400 font-mono">{session.falls}</div>
                     </div>
                     <div>
-                      <div className="text-sm text-gray-400">Avg/Attempt</div>
-                      <div className="text-xl font-bold">{(session.totalTouches / session.falls).toFixed(1)}</div>
+                      <div className="text-xs text-zinc-600 uppercase tracking-wide font-mono">Avg</div>
+                      <div className="text-2xl font-black text-zinc-400 font-mono">{(session.totalTouches / session.falls).toFixed(1)}</div>
                     </div>
                   </div>
                 </div>
