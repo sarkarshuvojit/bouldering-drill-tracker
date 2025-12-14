@@ -377,19 +377,19 @@ function App() {
                   <label className="block text-sm font-black text-zinc-300 mb-1 uppercase tracking-wider">Log Touches</label>
                   <p className="text-xs text-zinc-500 font-mono">Enter 0 for a fall</p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <input
                     type="number"
                     value={currentTouchInput}
                     onChange={(e) => setCurrentTouchInput(e.target.value)}
-                    className="flex-1 px-6 py-5 rounded-xl bg-zinc-800 border-2 border-zinc-700 focus:border-emerald-500 focus:outline-none text-3xl text-center text-zinc-100 font-mono font-black"
+                    className="w-full flex-1 px-6 py-5 rounded-xl bg-zinc-800 border-2 border-zinc-700 focus:border-emerald-500 focus:outline-none text-3xl text-center text-zinc-100 font-mono font-black"
                     placeholder="0"
                     min="0"
                     autoFocus
                   />
                   <button
                     type="submit"
-                    className="climbing-hold-btn w-32 h-24 flex items-center justify-center"
+                    className="climbing-hold-btn w-full sm:w-32 h-16 sm:h-24 flex items-center justify-center"
                   >
                     <img src={submitHold} alt="" className="climbing-hold-img" />
                     <span className="climbing-hold-text text-white font-black text-lg uppercase tracking-wide mix-blend-overlay opacity-90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9), 0 0 8px rgba(255,255,255,0.3)' }}>
