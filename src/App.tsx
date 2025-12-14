@@ -213,24 +213,76 @@ function App() {
         {showConfig && (
           <div className="mb-8 p-6 rounded-xl wall-texture border border-zinc-700 chalk-dust">
             <h2 className="text-xl font-black text-zinc-100 mb-4 uppercase tracking-wide">Settings</h2>
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div>
-                <label className="block text-xs font-bold text-zinc-400 mb-2 uppercase tracking-wide">Rest Between Sets (seconds)</label>
-                <input
-                  type="number"
-                  value={config.restBetweenSets}
-                  onChange={(e) => setConfig({ ...config, restBetweenSets: parseInt(e.target.value) || 0 })}
-                  className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-zinc-500 focus:outline-none text-zinc-100 font-mono"
-                  min="0"
-                />
+                <label className="block text-xs font-bold text-zinc-400 mb-3 uppercase tracking-wide">Rest Between Sets</label>
+
+                {/* Quick presets */}
+                <div className="grid grid-cols-4 gap-2 mb-3">
+                  {[30, 60, 120, 180].map((seconds) => (
+                    <button
+                      key={seconds}
+                      onClick={() => setConfig({ ...config, restBetweenSets: seconds })}
+                      className={`px-3 py-2 rounded-lg font-mono text-sm font-bold transition-all ${
+                        config.restBetweenSets === seconds
+                          ? 'bg-emerald-600 text-white border border-emerald-500'
+                          : 'bg-zinc-800 text-zinc-400 border border-zinc-700 hover:border-zinc-600'
+                      }`}
+                    >
+                      {seconds < 60 ? `${seconds}s` : `${Math.floor(seconds / 60)}m`}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Custom time input */}
+                <div className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <div className="text-xs text-zinc-500 mb-1 font-mono">Minutes</div>
+                    <input
+                      type="number"
+                      value={Math.floor(config.restBetweenSets / 60)}
+                      onChange={(e) => {
+                        const mins = parseInt(e.target.value) || 0
+                        const secs = config.restBetweenSets % 60
+                        setConfig({ ...config, restBetweenSets: mins * 60 + secs })
+                      }}
+                      className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-emerald-500 focus:outline-none text-zinc-100 font-mono text-center"
+                      min="0"
+                      max="10"
+                    />
+                  </div>
+                  <div className="text-zinc-600 font-black text-xl pt-5">:</div>
+                  <div className="flex-1">
+                    <div className="text-xs text-zinc-500 mb-1 font-mono">Seconds</div>
+                    <input
+                      type="number"
+                      value={config.restBetweenSets % 60}
+                      onChange={(e) => {
+                        const secs = parseInt(e.target.value) || 0
+                        const mins = Math.floor(config.restBetweenSets / 60)
+                        setConfig({ ...config, restBetweenSets: mins * 60 + Math.min(secs, 59) })
+                      }}
+                      className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-emerald-500 focus:outline-none text-zinc-100 font-mono text-center"
+                      min="0"
+                      max="59"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-2 text-center">
+                  <span className="text-xs text-zinc-600 font-mono">
+                    Total: {formatTime(config.restBetweenSets * 1000)}
+                  </span>
+                </div>
               </div>
+
               <div>
                 <label className="block text-xs font-bold text-zinc-400 mb-2 uppercase tracking-wide">Target Touches</label>
                 <input
                   type="number"
                   value={config.targetTouches}
                   onChange={(e) => setConfig({ ...config, targetTouches: parseInt(e.target.value) || 0 })}
-                  className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-zinc-500 focus:outline-none text-zinc-100 font-mono"
+                  className="w-full px-4 py-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:border-zinc-500 focus:outline-none text-zinc-100 font-mono text-center text-xl"
                   min="1"
                 />
               </div>
