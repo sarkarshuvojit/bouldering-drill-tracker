@@ -27,43 +27,36 @@
 }
 
 @layer utilities {
-  .climbing-hold {
+  .climbing-hold-btn {
     position: relative;
-    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-    box-shadow:
-      inset -2px -2px 8px rgba(0, 0, 0, 0.4),
-      inset 2px 2px 8px rgba(255, 255, 255, 0.1),
-      0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.2s ease;
-    background: linear-gradient(135deg, currentColor 0%, currentColor 100%);
+    transition: all 0.15s ease;
+    filter: brightness(1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    overflow: visible;
   }
 
-  .climbing-hold::before {
-    content: '';
+  .climbing-hold-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    filter: brightness(1.1) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5));
+  }
+
+  .climbing-hold-btn:active {
+    transform: translateY(1px) scale(0.98);
+    filter: brightness(0.95) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  }
+
+  .climbing-hold-img {
     position: absolute;
-    top: 20%;
-    left: 25%;
-    width: 30%;
-    height: 25%;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    filter: blur(8px);
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .climbing-hold:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      inset -2px -2px 8px rgba(0, 0, 0, 0.4),
-      inset 2px 2px 8px rgba(255, 255, 255, 0.1),
-      0 6px 16px rgba(0, 0, 0, 0.4);
-  }
-
-  .climbing-hold:active {
-    transform: translateY(0);
-    box-shadow:
-      inset -2px -2px 8px rgba(0, 0, 0, 0.5),
-      inset 2px 2px 8px rgba(255, 255, 255, 0.05),
-      0 2px 8px rgba(0, 0, 0, 0.3);
+  .climbing-hold-text {
+    position: relative;
+    z-index: 1;
   }
 
   .chalk-dust {

@@ -1,5 +1,19 @@
 import { useState, useEffect, useRef } from 'react'
 
+// Import all button images
+import button0 from './assets/buttons/button_sheet-0.png'
+import button1 from './assets/buttons/button_sheet-1.png'
+import button2 from './assets/buttons/button_sheet-2.png'
+import button3 from './assets/buttons/button_sheet-3.png'
+import button4 from './assets/buttons/button_sheet_2-0.png'
+import button5 from './assets/buttons/button_sheet_2-1.png'
+import button6 from './assets/buttons/button_sheet_2-2.png'
+import button7 from './assets/buttons/button_sheet_2-3.png'
+
+// Random climbing hold selector
+const BUTTON_IMAGES = [button0, button1, button2, button3, button4, button5, button6, button7]
+const getRandomHold = () => BUTTON_IMAGES[Math.floor(Math.random() * BUTTON_IMAGES.length)]
+
 interface Config {
   restBetweenSets: number
   targetTouches: number
@@ -23,6 +37,12 @@ interface Session {
 type AppState = 'idle' | 'active' | 'resting' | 'complete'
 
 function App() {
+  // Random hold classes - picked once per component mount
+  const [startHold] = useState(getRandomHold)
+  const [submitHold] = useState(getRandomHold)
+  const [skipHold] = useState(getRandomHold)
+  const [newSessionHold] = useState(getRandomHold)
+
   const [config, setConfig] = useState<Config>(() => {
     const saved = localStorage.getItem('bouldering-config')
     return saved ? JSON.parse(saved) : { restBetweenSets: 180, targetTouches: 100 }
@@ -229,9 +249,12 @@ function App() {
             </div>
             <button
               onClick={startSession}
-              className="climbing-hold px-12 py-6 text-emerald-500 hover:text-emerald-400 font-black text-xl uppercase tracking-wider"
+              className="climbing-hold-btn w-64 h-32 flex items-center justify-center mx-auto"
             >
-              Start Session
+              <img src={startHold} alt="" className="climbing-hold-img" />
+              <span className="climbing-hold-text text-white font-black text-lg uppercase tracking-wide mix-blend-overlay opacity-90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9), 0 0 8px rgba(255,255,255,0.3)' }}>
+                Start Session
+              </span>
             </button>
           </div>
         )}
@@ -275,9 +298,12 @@ function App() {
                 <div className="text-6xl font-black text-orange-400 mb-6 font-mono">{formatTime(restTimeLeft)}</div>
                 <button
                   onClick={skipRest}
-                  className="climbing-hold px-8 py-3 text-orange-500 hover:text-orange-400 font-bold uppercase tracking-wide text-sm"
+                  className="climbing-hold-btn w-48 h-24 flex items-center justify-center mx-auto"
                 >
-                  Skip
+                  <img src={skipHold} alt="" className="climbing-hold-img" />
+                  <span className="climbing-hold-text text-white font-black uppercase tracking-wide mix-blend-overlay opacity-90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9), 0 0 8px rgba(255,255,255,0.3)' }}>
+                    Skip
+                  </span>
                 </button>
               </div>
             ) : (
@@ -298,9 +324,12 @@ function App() {
                   />
                   <button
                     type="submit"
-                    className="climbing-hold px-10 py-5 text-emerald-500 hover:text-emerald-400 font-black text-lg uppercase tracking-wide"
+                    className="climbing-hold-btn w-32 h-24 flex items-center justify-center"
                   >
-                    Log
+                    <img src={submitHold} alt="" className="climbing-hold-img" />
+                    <span className="climbing-hold-text text-white font-black text-lg uppercase tracking-wide mix-blend-overlay opacity-90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9), 0 0 8px rgba(255,255,255,0.3)' }}>
+                      Log
+                    </span>
                   </button>
                 </div>
               </form>
@@ -347,9 +376,12 @@ function App() {
             </div>
             <button
               onClick={resetSession}
-              className="climbing-hold px-12 py-6 text-blue-500 hover:text-blue-400 font-black text-xl uppercase tracking-wider"
+              className="climbing-hold-btn w-64 h-32 flex items-center justify-center mx-auto"
             >
-              New Session
+              <img src={newSessionHold} alt="" className="climbing-hold-img" />
+              <span className="climbing-hold-text text-white font-black text-lg uppercase tracking-wide mix-blend-overlay opacity-90" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9), 0 0 8px rgba(255,255,255,0.3)' }}>
+                New Session
+              </span>
             </button>
           </div>
         )}
