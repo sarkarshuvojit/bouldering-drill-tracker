@@ -8,30 +8,36 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      includeAssets: ['favicon.ico', 'icon.svg'],
       manifest: {
         name: 'Bouldering Drill Tracker',
         short_name: 'Drill Tracker',
         description: 'Track your bouldering drills and progress offline',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        theme_color: '#7c3aed',
+        background_color: '#1e1b4b',
         display: 'standalone',
+        start_url: '/',
+        scope: '/',
+        orientation: 'portrait-primary',
+        categories: ['sports', 'health', 'productivity'],
         icons: [
           {
             src: 'pwa-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'any'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ]
       },
